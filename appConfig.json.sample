@@ -1,0 +1,4 @@
+{
+    "connectionString": "<connection-string>",
+    "jwtSecret": "<jwt-secret-key>"
+}
