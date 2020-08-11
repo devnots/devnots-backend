@@ -20,7 +20,7 @@ jobs:
     - name: Create appConfig file
       run: echo $APP_CONFIG_ENC | base64 -d > appConfig.json
       env:
-        APP_CONFIG_ENC: ${{secrets.APP_CONFIG_ENC}
+        APP_CONFIG_ENC: ${{ secrets.APP_CONFIG_ENC }}
 
     - name: deploy
       uses: idoberko2/dokku-deploy-github-action@v1
