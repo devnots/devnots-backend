@@ -10,11 +10,10 @@ namespace DevNots.Domain.Note
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public Note(int UserId,string Text,DateTime CreatedAt)
+        public Note(int UserId,string Text)
         {
             this.UserId = UserId;
             this.Text = Text;
-            this.CreatedAt = CreatedAt;
         }
     }
 }

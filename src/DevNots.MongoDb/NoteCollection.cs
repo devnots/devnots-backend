@@ -39,8 +39,7 @@ namespace DevNots.MongoDb
         public async Task<string> CreateAsync(Note aggregate)
         {
             await collection.InsertOneAsync(aggregate).ConfigureAwait(false);
-            var _note = await FindOneAsync(filter => filter.UserId == aggregate.UserId || filter.Text == aggregate.Text);
-            return _note.Text;
+            return aggregate.Id;
         }
 
         public async Task<bool> RemoveAsync(string id)
