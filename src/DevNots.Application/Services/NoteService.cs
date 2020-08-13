@@ -14,13 +14,13 @@ namespace DevNots.Application.Services
 {
     public class NoteService:AppService
     {
-        private readonly INoteRepository _INoteRepository;
+        private readonly INoteRepository noteRepository;
         private readonly IMapper mapper;
         private readonly IValidator<NoteDto> validator;
 
-        public NoteService(INoteRepository _INoteRepository, IMapper mapper, IValidator<NoteDto> validator)
+        public NoteService(INoteRepository noteRepository, IMapper mapper, IValidator<NoteDto> validator)
         {
-            this._INoteRepository = _INoteRepository;
+            this.noteRepository = noteRepository;
             this.mapper = mapper;
             this.validator = validator;
         }
@@ -37,7 +37,7 @@ namespace DevNots.Application.Services
             }
 
             var _note = mapper.Map<Note>(noteDto);
-            var id = await _INoteRepository.CreateAsync(_note);
+            var id = await noteRepository.CreateAsync(_note);
 
             response.Result = id;
             return response;
@@ -47,7 +47,7 @@ namespace DevNots.Application.Services
         {
             var response = new AppResponse();
 
-            var isSuccess = await _INoteRepository.RemoveAsync(request.Id);
+            var isSuccess = await noteRepository.RemoveAsync(request.Id);
 
             if (!isSuccess)
             {
@@ -81,27 +81,30 @@ namespace DevNots.Application.Services
                 return ErrorResponse(errorMessage, 400, response);
             }
 
-            var users = await _INoteRepository.PaginateAsync(page, pageSize);
+            var users = await noteRepository.PaginateAsync(page, pageSize);
 
             response.Result = mapper.Map<IEnumerable<NoteDto>>(users);
             return response;
         }
 
-        public async Task<AppResponse<string>> UpdateNoteAsync(NoteDto noteDto)
+        public async Task<AppResponse<bool>> UpdateNoteAsync(NoteDto noteDto)
         {
-            var response = new AppResponse<string>();
+            var validationResult = validator.Validate(noteDto);
+            var response = new AppResponse<bool>();
 
-            var isSuccess = await _INoteRepository.FindAsync(x=>x.Id == noteDto.Id).ConfigureAwait(false);
-
-            if (isSuccess.SingleOrDefault() == null)
+            if (validationResult.Errors.Any())
             {
-                var errorMessage = "Note not found.";
-                return ErrorResponse(errorMessage, 404, response);
+                var errorMessage = validationResult.Errors.FirstOrDefault().ErrorMessage;
+                return ErrorResponse(errorMessage, 400, response);
             }
 
-            var _note = mapper.Map<Note>(noteDto);
-            var id = await _INoteRepository.UpdateAsync(noteDto.Id, _note);
+            if (string.IsNullOrEmpty(noteDto.Id))
+                return ErrorResponse("Id can not be empty.", 400, response);
 
+            var note = mapper.Map<Note>(noteDto);
+            var isUpdated = await noteRepository.UpdateAsync(noteDto.Id, note);
+
+            response.Result = isUpdated;
             return response;
         }
     }

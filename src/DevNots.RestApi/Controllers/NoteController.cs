@@ -39,7 +39,7 @@ namespace DevNots.RestApi.Controllers
             if (response.Error != null)
                 return StatusCode(response.Error.StatusCode, response.Error);
 
-            return Ok(new { message = "User deleted." });
+            return Ok(new { message = "Note deleted." });
         }
 
         [HttpGet]
@@ -64,7 +64,12 @@ namespace DevNots.RestApi.Controllers
             if (response.Error != null)
                 return StatusCode(response.Error.StatusCode, response.Error.Message);
 
-            return Ok(response.Result);
+            var isUpdated = response.Result;
+
+            if (!isUpdated)
+                return NotFound(new { message = "404 not found."});
+
+            return Ok(new { message = "user updated." });
         }
     }
 }
