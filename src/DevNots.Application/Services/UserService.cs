@@ -87,7 +87,7 @@ namespace DevNots.Application.Services
             return response;
         }
 
-        public async Task<AppResponse<bool>> UpdateAsync(UserDto userDto)
+        public async Task<AppResponse<bool>> UpdateUserAsync(UserDto userDto)
         {
             var validationResult = validator.Validate(userDto);
             var response = new AppResponse<bool>();
@@ -95,6 +95,11 @@ namespace DevNots.Application.Services
             if (validationResult.Errors.Any())
             {
                 var errorMessage = validationResult.Errors.FirstOrDefault().ErrorMessage;
+                return ErrorResponse(errorMessage, 400, response);
+            }
+            if (string.IsNullOrEmpty(userDto.Id))
+            {
+                var errorMessage = "User Id can not be empty";
                 return ErrorResponse(errorMessage, 400, response);
             }
 
