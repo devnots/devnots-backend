@@ -51,5 +51,16 @@ namespace DevNots.RestApi.Controllers
             return Ok(response.Result);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] UserDto request)
+        {
+            var response = await userService.UpdateUserAsync(request);
+
+            if (response.Error != null)
+                return StatusCode(response.Error.StatusCode, response.Error);
+
+            return StatusCode(201, new { id = response.Result });
+        }
+
     }
 }
