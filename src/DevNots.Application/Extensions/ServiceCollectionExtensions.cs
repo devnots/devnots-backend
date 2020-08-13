@@ -5,6 +5,7 @@ using DevNots.Application.Repositories;
 using DevNots.Application.Services;
 using DevNots.Application.Validations;
 using DevNots.Domain;
+using DevNots.Domain.Note;
 using DevNots.MongoDb;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +36,11 @@ namespace DevNots.Application.Extensions
                 .AddSingleton(mapper)
                 .AddScoped<IValidator<UserDto>, UserValidator>()
                 .AddScoped<UserService>()
-                .AddScoped<IUserRepository, UserRepository>();
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IValidator<NoteDto>, NoteValidator>()
+                .AddScoped<NoteService>()
+                .AddScoped<INoteRepository,NoteRepository>();
+            ;
         }
 
         public static IServiceCollection AddMongoDb(this IServiceCollection services, string connectionStrig)
