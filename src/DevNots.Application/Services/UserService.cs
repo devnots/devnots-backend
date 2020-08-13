@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -27,12 +27,12 @@ namespace DevNots.Application.Services
         /// <returns>Id of the registered user</returns>
         public async Task<AppResponse<string>> RegisterAsync(UserDto userDto)
         {
-            var validatitonResult = validator.Validate(userDto);
+            var validationResult = validator.Validate(userDto);
             var response = new AppResponse<string>();
 
-            if (validatitonResult.Errors.Any())
+            if (validationResult.Errors.Any())
             {
-                var errorMessage = validatitonResult.Errors.FirstOrDefault().ErrorMessage;
+                var errorMessage = validationResult.Errors.FirstOrDefault().ErrorMessage;
                 return ErrorResponse(errorMessage, 400, response);
             }
 
