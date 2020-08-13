@@ -87,5 +87,23 @@ namespace DevNots.Application.Services
             return response;
         }
 
+        public async Task<AppResponse<bool>> UpdateAsync(UserDto userDto)
+        {
+            var validationResult = validator.Validate(userDto);
+            var response = new AppResponse<bool>();
+
+            if (validationResult.Errors.Any())
+            {
+                var errorMessage = validationResult.Errors.FirstOrDefault().ErrorMessage;
+                return ErrorResponse(errorMessage, 400, response);
+            }
+
+            var user = mapper.Map<User>(userDto);
+            var id = await userRepository.UpdateAsync(userDto.Id,user);
+
+            response.Result = id;
+            return response;
+        }
+
     }
 }

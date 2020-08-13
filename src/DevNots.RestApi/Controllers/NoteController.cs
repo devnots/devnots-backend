@@ -21,7 +21,7 @@ namespace DevNots.RestApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNoteAsync([FromBody] NoteDto note)
+        public async Task<IActionResult> CreateNote([FromBody] NoteDto note)
         {
             var response = await _noteService.CreateNoteAsync(note);
 
@@ -32,7 +32,7 @@ namespace DevNots.RestApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteNoteAsync([FromBody] DeleteNoteDto note)
+        public async Task<IActionResult> DeleteNote([FromBody] DeleteNoteDto note)
         {
             var response = await _noteService.DeleteNoteAsync(note);
 
@@ -43,7 +43,7 @@ namespace DevNots.RestApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetNotesAsync([FromQuery] int limit = 20)
+        public async Task<IActionResult> GetNotes([FromQuery] int limit = 20)
         {
             var response = await _noteService.GetNotesAsync(new NoteListDto()
             {
@@ -57,7 +57,7 @@ namespace DevNots.RestApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateNoteAsync([FromBody]NoteDto note)
+        public async Task<IActionResult> UpdateNote([FromBody]NoteDto note)
         {
             var response = await _noteService.UpdateNoteAsync(note);
 
