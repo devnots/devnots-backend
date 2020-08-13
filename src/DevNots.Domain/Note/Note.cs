@@ -6,11 +6,11 @@ namespace DevNots.Domain.Note
 {
     public class Note:AggregateRoot,INoteDetails
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string Text { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public Note(int UserId,string Text)
+        public Note(string UserId,string Text)
         {
             this.UserId = UserId;
             this.Text = Text;
