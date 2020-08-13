@@ -50,13 +50,13 @@ namespace DevNots.MongoDb
                 return false;
 
             var result = await collection.DeleteOneAsync(x => x.Id == id);
-            return result.IsAcknowledged;
+            return result.DeletedCount > 0;
         }
 
         public async Task<bool> UpdateAsync(string id, Note aggregate)
         {
             var _note =await collection.ReplaceOneAsync(x => x.Id == id, aggregate);
-            return _note.IsAcknowledged;
+            return _note.IsModifiedCountAvailable;
         }
 
         public async Task<IEnumerable<Note>> FindAsync(Expression<Func<Note, bool>> predicate)

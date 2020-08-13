@@ -59,7 +59,12 @@ namespace DevNots.RestApi.Controllers
             if (response.Error != null)
                 return StatusCode(response.Error.StatusCode, response.Error);
 
-            return StatusCode(201, new { id = response.Result });
+            var isUpdated = response.Result;
+
+            if (!isUpdated)
+                return NotFound(new { message = "404 not found."});
+
+            return Ok(new { message = "user updated." });
         }
 
     }

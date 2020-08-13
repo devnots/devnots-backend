@@ -59,13 +59,13 @@ namespace DevNots.MongoDb
                 return false;
 
             var result = await  collection.DeleteOneAsync(x => x.Id == id);
-            return result.IsAcknowledged;
+            return result.DeletedCount > 0;
         }
 
         public async Task<bool> UpdateAsync(string id, User aggregate)
         {
             var result = await collection.ReplaceOneAsync(x => x.Id == id, aggregate);
-            return result.IsAcknowledged;
+            return result.IsModifiedCountAvailable;
         }
     }
 }

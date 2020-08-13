@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -64,7 +64,7 @@ namespace DevNots.Application.Services
 
             if (request.Limit > 49 || request.Limit < 1)
             {
-                var errorMessage = "limit must between 1-50";
+                var errorMessage = "limit parameter must between 1-50";
                 return ErrorResponse(errorMessage, 400, response);
             }
 
@@ -75,9 +75,9 @@ namespace DevNots.Application.Services
         {
             var response = new AppResponse<IEnumerable<UserDto>>();
 
-            if (pageSize > 49)
+            if (page < 1 || pageSize > 49 || pageSize < 1)
             {
-                var errorMessage = "pageSize can not be greater than 50";
+                var errorMessage = "pageSize parameter must between 1-50 and page parameter must be positive value.";
                 return ErrorResponse(errorMessage, 400, response);
             }
 
@@ -98,15 +98,12 @@ namespace DevNots.Application.Services
                 return ErrorResponse(errorMessage, 400, response);
             }
             if (string.IsNullOrEmpty(userDto.Id))
-            {
-                var errorMessage = "User Id can not be empty";
-                return ErrorResponse(errorMessage, 400, response);
-            }
+                return ErrorResponse("Id can not be empty.", 400, response);
 
             var user = mapper.Map<User>(userDto);
-            var id = await userRepository.UpdateAsync(userDto.Id,user);
+            var isUpdated = await userRepository.UpdateAsync(userDto.Id, user);
 
-            response.Result = id;
+            response.Result = isUpdated;
             return response;
         }
 
