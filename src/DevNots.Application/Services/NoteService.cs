@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DevNots.Application.Contracts;
+using DevNots.Application.Contracts.Note;
 using DevNots.Domain;
 using DevNots.Domain.Note;
 using FluentValidation;

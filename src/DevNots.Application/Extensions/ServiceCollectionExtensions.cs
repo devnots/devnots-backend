@@ -1,5 +1,7 @@
 using AutoMapper;
 using DevNots.Application.Contracts;
+using DevNots.Application.Contracts.Note;
+using DevNots.Application.Contracts.User;
 using DevNots.Application.Mapping;
 using DevNots.Application.Repositories;
 using DevNots.Application.Services;

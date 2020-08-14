@@ -1,4 +1,5 @@
 using DevNots.Application.Contracts;
+using DevNots.Application.Contracts.User;
 using FluentValidation;
 
 namespace DevNots.Application.Validations

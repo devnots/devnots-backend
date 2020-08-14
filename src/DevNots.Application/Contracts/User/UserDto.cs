@@ -1,7 +1,7 @@
 using System;
 using DevNots.Domain;
 
-namespace DevNots.Application.Contracts
+namespace DevNots.Application.Contracts.User
 {
     public class UserDto : IUserDetails
     {

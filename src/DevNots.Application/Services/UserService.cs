@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DevNots.Application.Contracts;
+using DevNots.Application.Contracts.User;
 using DevNots.Domain;
 using FluentValidation;
 
