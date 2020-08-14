@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using DevNots.Application.Contracts;
+using DevNots.Application.Contracts.User;
 using DevNots.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 

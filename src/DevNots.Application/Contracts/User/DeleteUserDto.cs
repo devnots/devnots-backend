@@ -1,4 +1,4 @@
-namespace DevNots.Application.Contracts
+namespace DevNots.Application.Contracts.User
 {
     public class DeleteUserDto
     {

@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using DevNots.Domain.Note;
 
-namespace DevNots.Application.Contracts
+namespace DevNots.Application.Contracts.Note
 {
     public class NoteDto : INoteDetails
     {
