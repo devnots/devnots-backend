@@ -9,16 +9,17 @@ namespace DevNots.Application.Validations
         public UserValidator()
         {
             RuleFor(x => x.Username)
-                .NotEmpty()
+                .NotEmpty().WithMessage(CustomMessage)
                 .MaximumLength(32);
 
             RuleFor(x => x.Password)
-                .NotEmpty()
+                .NotEmpty().WithMessage(CustomMessage)
                 .MaximumLength(32);
 
             RuleFor(x => x.Email)
-                .NotEmpty()
+                .NotEmpty().WithMessage(CustomMessage)
                 .EmailAddress();
         }
+        private string CustomMessage = "{PropertyName} can not be empty";
     }
 }
