@@ -20,7 +20,11 @@ namespace DevNots.RestApi.Controllers
         {
             _noteService = noteService;
         }
-
+        /// <summary>
+        /// Create a note 
+        /// </summary>
+        /// <param name="note">Note object</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateNote([FromBody] NoteDto note)
         {
@@ -31,7 +35,11 @@ namespace DevNots.RestApi.Controllers
 
             return StatusCode(201, new { id = response.Result });
         }
-
+        /// <summary>
+        /// Delete the note
+        /// </summary>
+        /// <param name="note">DeleteNoteDto object</param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> DeleteNote([FromBody] DeleteNoteDto note)
         {
@@ -42,7 +50,11 @@ namespace DevNots.RestApi.Controllers
 
             return Ok(new { message = "Note deleted." });
         }
-
+        /// <summary>
+        /// Get list of Notes
+        /// </summary>
+        /// <param name="limit">Set the note limit  ( Default limit = 20 )</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetNotes([FromQuery] int limit = 20)
         {
@@ -56,7 +68,11 @@ namespace DevNots.RestApi.Controllers
 
             return Ok(response.Result);
         }
-
+        /// <summary>
+        /// Update the note
+        /// </summary>
+        /// <param name="note">Note Object</param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> UpdateNote([FromBody]NoteDto note)
         {

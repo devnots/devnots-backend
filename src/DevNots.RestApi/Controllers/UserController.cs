@@ -15,7 +15,11 @@ namespace DevNots.RestApi.Controllers
         {
             this.userService = userService;
         }
-
+        /// <summary>
+        /// Register an User
+        /// </summary>
+        /// <param name="user">User Object</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> RegisterUser([FromBody] UserDto user)
         {
@@ -26,7 +30,11 @@ namespace DevNots.RestApi.Controllers
 
             return StatusCode(201, new { id = response.Result });
         }
-
+        /// <summary>
+        /// Delete the User
+        /// </summary>
+        /// <param name="request">DeleteUserDto Object</param>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> DeleteUser([FromBody] DeleteUserDto request)
         {
@@ -37,7 +45,11 @@ namespace DevNots.RestApi.Controllers
 
             return Ok(new { message = "User deleted."});
         }
-
+        /// <summary>
+        /// Get List of Users
+        /// </summary>
+        /// <param name="limit">Set the user limit  ( Default limit = 20 )</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery] int limit = 20)
         {
@@ -51,7 +63,11 @@ namespace DevNots.RestApi.Controllers
 
             return Ok(response.Result);
         }
-
+        /// <summary>
+        /// Update the User
+        /// </summary>
+        /// <param name="request">User Object</param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> UpdateUser([FromBody] UserDto request)
         {

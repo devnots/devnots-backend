@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic.CompilerServices;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace DevNots.RestApi
 {
@@ -25,6 +28,19 @@ namespace DevNots.RestApi
 
         public IConfiguration Configuration { get; }
 
+        #region Constant Variables
+
+        private string PROJECT_TITLE = "Devnots Advanced Note API Documentation";
+
+        private string PROJECT_VERSION = "1.0";
+
+        private string PROJECT_DESCRIPTION = "Advanced Note Application";
+
+        private string GENERAL_URL = "https://github.com/fasetto/devnots/issues";
+
+        private string CONTACT_NAME = "Team of Devnots";
+
+        #endregion
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -41,6 +57,20 @@ namespace DevNots.RestApi
             services.AddApplicationDependencies();
             services.AddMongoDb(connectionString);
             services.AddControllers();
+
+            services.AddSwaggerDocument(config =>
+                config.PostProcess = (settings =>
+                        {
+                            settings.Info.Title = PROJECT_TITLE;
+                            settings.Info.Version = PROJECT_VERSION;
+                            settings.Info.Description = PROJECT_DESCRIPTION;
+                            settings.Info.Contact = new NSwag.OpenApiContact
+                            {
+                                Name = CONTACT_NAME,
+                                Url = GENERAL_URL
+                            };
+                        }
+                     )); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +91,10 @@ namespace DevNots.RestApi
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwaggerUi3();
+
+            app.UseOpenApi();
         }
 
         public AppConfig ReadAppConfig()
