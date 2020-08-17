@@ -1,5 +1,6 @@
 using AutoMapper;
 using DevNots.Application.Contracts;
+using DevNots.Application.Contracts.Keyword;
 using DevNots.Application.Contracts.Note;
 using DevNots.Application.Contracts.User;
 using DevNots.Application.Mapping;
@@ -7,6 +8,7 @@ using DevNots.Application.Repositories;
 using DevNots.Application.Services;
 using DevNots.Application.Validations;
 using DevNots.Domain;
+using DevNots.Domain.Keyword;
 using DevNots.Domain.Note;
 using DevNots.MongoDb;
 using FluentValidation;
@@ -41,7 +43,10 @@ namespace DevNots.Application.Extensions
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IValidator<NoteDto>, NoteValidator>()
                 .AddScoped<NoteService>()
-                .AddScoped<INoteRepository,NoteRepository>();
+                .AddScoped<INoteRepository,NoteRepository>()
+                .AddScoped<IValidator<KeywordDto>,KeywordValidator>()
+                .AddScoped<KeywordService>()
+                .AddScoped<IKeywordRepository,KeywordRepository>();
         }
 
         public static IServiceCollection AddMongoDb(this IServiceCollection services, string connectionStrig)
