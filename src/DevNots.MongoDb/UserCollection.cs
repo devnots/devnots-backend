@@ -10,7 +10,7 @@ namespace DevNots.MongoDb
 {
     public class UserCollection : IDbCollection<User>
     {
-        private IMongoCollection<User> collection;
+        private readonly IMongoCollection<User> collection;
         public UserCollection(IMongoCollection<User> collection)
         {
             this.collection = collection;
@@ -64,8 +64,13 @@ namespace DevNots.MongoDb
 
         public async Task<bool> UpdateAsync(string id, User aggregate)
         {
+            var isValidId = ObjectId.TryParse(id, out _);
+
+            if (!isValidId)
+                return false;
+
             var result = await collection.ReplaceOneAsync(x => x.Id == id, aggregate);
-            return result.IsModifiedCountAvailable;
+            return result.ModifiedCount > 0;
         }
     }
 }

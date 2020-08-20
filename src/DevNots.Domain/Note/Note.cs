@@ -1,25 +1,28 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace DevNots.Domain.Note
+namespace DevNots.Domain
 {
-    public class Note:AggregateRoot,INoteDetails
+    public class Note: AggregateRoot, INoteDetails
     {
         public string UserId { get; set; }
         public string Text { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public IEnumerable<string> Keywords { get; set; }
         public DateTime CreatedAt { get; set; }
+        public IEnumerable<Tag> TagList { get; set; }
 
-        public Note(string UserId,string Text,string Title , string Description,IEnumerable<string> Keywords)
+        public Note(
+            string userId,
+            string title,
+            string text,
+            string description = default
+        )
         {
-            this.UserId = UserId;
-            this.Text = Text;
-            this.Title = Title;
-            this.Description = Description;
-            this.Keywords = Keywords;
+            this.UserId      = userId;
+            this.Text        = text;
+            this.Title       = title;
+            this.Description = description;
         }
     }
 }
